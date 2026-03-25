@@ -1,0 +1,23 @@
+Passagem de parâmetros obrigatórios na tela de Perfil:
+A tela de Perfil recebe o nome do usuário como um parâmetro obrigatório através da Navigation Compose.
+Parâmetros obrigatórios são valores que precisam ser enviados junto com a navegação para que a tela funcione.  o nome é obrigatório porque a tela de Perfil precisa dele para exibir a mensagem correta. Ele é passado diretamente na URL da rota, assim: navController.navigate("perfil/Fulano de Tal") o nome vai embutido no próprio endereço de navegação.
+Para receber esse valor, a rota foi definida como "perfil/{nome}", onde o {nome} avisa o Navigation que ali vai chegar um valor diferente a cada navegação. Quando a tela abre, esse valor é recuperado com it.arguments?.getString("nome", "Usuário Genérico") se  o nome não chegar, o texto "Usuário Genérico" é usado no lugar.
+A função PerfilScreen recebe esse nome como uma String e exibe na tela usando "PERFIL - $nome"
+
+
+Passagem de parâmetros opcionais na tela de Pedidos:
+A tela de Pedidos recebe o nome do cliente como um parâmetro opcional através da Navigation Compose.
+Parâmetros opcionais são valores que podem ou não ser enviados junto com a navegação. Se o nome do cliente não for enviado, a tela usa "Cliente Genérico" no lugar e funciona normalmente. Isso é configurado com o defaultValue dentro do navArgument("cliente").
+A rota foi definida como "pedidos?cliente={cliente}", onde o ? indica que o parâmetro é opcional. Se nenhum valor for enviado, o Navigation não bloqueia a navegação, ele simplesmente usa o defaultValue.
+A função PedidosScreen recebe o cliente como String?, onde o ? no tipo significa que esse valor pode ser nulo. O nome é exibido na tela com "PEDIDOS - $cliente".
+
+
+Inserindo valor ao parâmetro opcional na tela de Pedidos:
+Aqui a navegação para a tela de Pedidos é feita enviando um valor para o parâmetro opcional. O navController.navigate("pedidos?cliente=Cliente XPTO") leva o nome "Cliente XPTO" junto na URL, que será recebido pela tela e exibido no lugar do valor padrão.
+
+
+Passagem de múltiplos parâmetros:
+A tela de Perfil agora recebe dois parâmetros , o nome e a idade do usuário.
+A rota foi definida como "perfil/{nome}/{idade}", onde cada valor tem seu próprio espaço reservado na URL. Diferente de antes, agora são declarados dois navArgument, um para cada parâmetro, onde o type define o tipo de dado esperado, NavType.StringType para o nome e NavType.IntType para a idade.
+A navegação é feita com navController.navigate("perfil/Fulano de Tal/27"), onde os dois valores são enviados juntos na URL, cada um no seu lugar. A tela recupera o nome com getString("nome") e a idade com getInt("idade", 0), onde o 0 é o valor padrão caso a idade não chegue.
+A função PerfilScreen recebe os dois como parâmetros separados, nome: String e idade: Int, e os exibe juntos com "PERFIL - $nome tem $idade anos".
